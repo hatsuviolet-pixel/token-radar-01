@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — Pre-Token Launch Opportunities</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<a class="skip" href="#board">Skip to board</a>
+
+<header class="top">
+  <div class="brand">
+    <span class="mark"></span>
+    <h1>Token Radar</h1>
+    <span class="brand-name">pre-token launch radar · radar-2 model</span>
+  </div>
+  <div class="top-meta">
+    <span id="meta-as-of"></span>
+    <span id="meta-protocols"></span>
+    <span id="meta-model"></span>
+  </div>
+</header>
+
+<main id="board" tabindex="-1" aria-busy="true">
+  <section class="stats-row" id="stats-row"></section>
+  
+  <section class="filter-bar">
+    <div class="field">
+      <label for="search">Search</label>
+      <input id="search" type="search" placeholder="Filter by name or chain..." autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="category-filter">Category</label>
+      <select id="category-filter"><option value="">All Categories</option></select>
+    </div>
+    <div class="field">
+      <label for="chain-filter">Chain</label>
+      <select id="chain-filter"><option value="">All Chains</option></select>
+    </div>
+    <div class="field">
+      <label for="sort-by">Sort By</label>
+      <select id="sort-by">
+        <option value="implied">Implied Value ↓</option>
+        <option value="tvl">TVL ↓</option>
+        <option value="growth">7D Growth ↑</option>
+        <option value="maturity">Maturity ↓</option>
+      </select>
+    </div>
+    <button id="reset-filters" class="btn-reset">Reset</button>
+    <span class="count" id="count-display"></span>
+  </section>
+
+  <section class="model-info" id="model-info">
+    <h2>Scoring Model (radar-2)</h2>
+    <p>Implied value = TVL × base_multiple × growth_multiplier × maturity_multiplier</p>
+    <table class="model-table">
+      <tr><th>Parameter</th><th>Value</th><th>Description</th></tr>
+      <tr><td>base_multiple</td><td id="param-base"></td><td>TVL to market cap ratio</td></tr>
+      <tr><td>growth_weight</td><td id="param-growth"></td><td>Growth impact on score</td></tr>
+      <tr><td>growth_floor</td><td id="param-growth-floor"></td><td>Min 7d growth clamp (%)</td></tr>
+      <tr><td>growth_cap</td><td id="param-growth-cap"></td><td>Max 7d growth clamp (%)</td></tr>
+      <tr><td>maturity_floor</td><td id="param-mat-floor"></td><td>Min maturity multiplier</td></tr>
+      <tr><td>maturity_range</td><td id="param-mat-range"></td><td>Maturity spread</td></tr>
+    </table>
+  </section>
+
+  <section class="board-section">
+    <h2>Ranked Board</h2>
+    <div class="table-container">
+      <table id="board-table">
+        <thead>
+          <tr>
+            <th class="col-rank">#</th>
+            <th class="col-name">Protocol</th>
+            <th class="col-cat">Category</th>
+            <th class="col-chains">Chains</th>
+            <th class="col-tvl">TVL</th>
+            <th class="col-change">7D %</th>
+            <th class="col-age">Age</th>
+            <th class="col-implied">Implied Value</th>
+            <th class="col-action">Action</th>
+          </tr>
+        </thead>
+        <tbody id="board-body"></tbody>
+      </table>
+    </div>
+    <div id="load-more-wrap" class="load-more-wrap">
+      <button id="load-more" class="btn-load">Load More</button>
+    </div>
+  </section>
+</main>
+
+<aside class="detail-panel" id="detail-panel" hidden>
+  <button class="close-detail" id="close-detail" aria-label="Close">✕</button>
+  <div class="detail-content" id="detail-content"></div>
+</aside>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
